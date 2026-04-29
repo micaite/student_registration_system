@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.__laboras.HelloController">
+    <children>
+        <TableView layoutX="121.0" layoutY="50.0" prefHeight="301.0" prefWidth="332.0">
+            <columns>
+                <TableColumn prefWidth="75.0" text="Vardas" />
+                <TableColumn prefWidth="75.0" text="Pavarde" />
+                <TableColumn prefWidth="75.0" text="Amzius" />
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>
