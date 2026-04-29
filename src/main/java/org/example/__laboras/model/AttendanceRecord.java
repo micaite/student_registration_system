@@ -13,6 +13,12 @@ public abstract class AttendanceRecord {
 
      public abstract String getStatus();
 
-     // getteriai
+    public Student getStudent() {
+        return student;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
 
 }

@@ -24,6 +24,10 @@ public class Group implements Exportable, Reportable {
         return students;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public List<AttendanceRecord> generateReport (LocalDate dateFrom, LocalDate dateTo) {
         // implementuosiu veliau

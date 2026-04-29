@@ -3,9 +3,9 @@ package org.example.__laboras.model;
 import org.example.__laboras.interfaces.Exportable;
 
 public class Student implements Exportable {
-    private String id;
-    private String name;
-    private String surname;
+    final private String id;
+    final private String name;
+    final private String surname;
 
     public Student (String id, String firstName, String lastName){
         this.id = id;
@@ -13,7 +13,11 @@ public class Student implements Exportable {
         this.surname = lastName;
     }
 
-    // getteriai ir setteriai
+    public String getId() { return id; }
+    public String getName() { return name; }
+    public String getSurname() { return surname; }
+
+    // ir setteriai
 
     @Override
     public void exportToCSV(String filePath) throws Exception{
@@ -21,7 +25,7 @@ public class Student implements Exportable {
     }
 
     @Override
-    public void exportToExcel (String filePath){
+    public void exportToExcel (String filePath) throws Exception{
         // veliau
     }
 }
