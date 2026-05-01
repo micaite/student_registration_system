@@ -11,6 +11,7 @@ import java.util.Locale;
 public class Group implements Exportable, Reportable {
     private String name;
     private List<Student> students = new ArrayList<>();
+    private List<AttendanceRecord> attendanceRecords = new ArrayList<>();
 
     public Group(String name){
         this.name = name;
@@ -18,6 +19,7 @@ public class Group implements Exportable, Reportable {
 
     public void addStudent (Student s){
         students.add(s);
+        s.setGroupName(this.name);
     }
 
     public List<Student> getStudents() {
@@ -29,9 +31,19 @@ public class Group implements Exportable, Reportable {
     }
 
     @Override
-    public List<AttendanceRecord> generateReport (LocalDate dateFrom, LocalDate dateTo) {
-        // implementuosiu veliau
-        return new ArrayList<>();
+    public String toString() {
+        return name;
+    }
+
+    public void addAttendance(AttendanceRecord record) {
+        attendanceRecords.add(record);
+    }
+
+    @Override
+    public List<AttendanceRecord> generateReport(LocalDate dateFrom, LocalDate dateTo) {
+        return attendanceRecords.stream()
+                .filter(r -> !r.getDate().isBefore(dateFrom) && !r.getDate().isAfter(dateTo))
+                .toList();
     }
 
     @Override

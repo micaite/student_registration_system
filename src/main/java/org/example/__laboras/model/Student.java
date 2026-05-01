@@ -3,23 +3,33 @@ package org.example.__laboras.model;
 import org.example.__laboras.interfaces.Exportable;
 
 public class Student implements Exportable {
-    final private String id;
-    final private String name;
-    final private String surname;
+    private String id;
+    private String firstName;
+    private String lastName;
     private String groupName;
 
     public Student (String id, String firstName, String lastName, String groupName){
         this.id = id;
-        this.name = firstName;
-        this.surname = lastName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.groupName = groupName;
     }
 
     public String getId() { return id; }
-    public String getName() { return name; }
-    public String getSurname() { return surname; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
     public String getGroupName() {return groupName; }
     // ir setteriai
+    public void setId(String id) {this.id= id;}
+    public void setFirstName(String firstName) {this.firstName = firstName; }
+    public void setLastName(String lastName) {this.lastName = lastName; }
+    public void setGroupName(String groupName) {this.groupName = groupName; }
+
+
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
+    }
 
     @Override
     public void exportToCSV(String filePath) throws Exception{

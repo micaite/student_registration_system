@@ -9,6 +9,6 @@ public class AbsentRecord extends AttendanceRecord {
 
     @Override
     public String getStatus() {
-        return "Nebuvo";
+        return "Absent";
     }
 }

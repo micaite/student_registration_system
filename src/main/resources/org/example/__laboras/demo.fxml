@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.control.ListView?>
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.__laboras.HelloController">
   <tabs>
     <Tab text="Students">
@@ -27,6 +28,7 @@
                       <TableColumn fx:id="colFirstName" prefWidth="103.33331298828125" text="First name" />
                         <TableColumn fx:id="colLastName" prefWidth="92.0" text="Last name" />
                         <TableColumn fx:id="colGroup" prefWidth="60.6666259765625" text="Group" />
+                        <TableColumn text="Actions" fx:id="colActions"/>
                     </columns>
                   </TableView>
                </children></AnchorPane>
@@ -34,10 +36,27 @@
     </Tab>
     <Tab text="Groups">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Button layoutX="31.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleNewGroup" text="+ New group" />
-               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                  <Button layoutX="14.0" layoutY="14.0" text="+ New Group" onAction="#handleNewGroup"/>
+                  <Button layoutX="114.0" layoutY="14.0" text="Delete Group" onAction="#handleDeleteGroup"/>
+
+                  <ListView fx:id="groupsList" layoutX="14.0" layoutY="50.0"
+                            prefHeight="300.0" prefWidth="200.0"/>
+
+                  <Button layoutX="224.0" layoutY="50.0" text="Add Student" onAction="#handleAddStudentToGroup"/>
+                  <Button layoutX="224.0" layoutY="80.0" text="Remove Student" onAction="#handleRemoveStudentFromGroup"/>
+
+                  <TableView fx:id="groupStudentsTable" layoutX="224.0" layoutY="110.0"
+                             prefHeight="240.0" prefWidth="400.0">
+                      <columns>
+                          <TableColumn fx:id="colGroupStudentId" text="ID" prefWidth="80.0"/>
+                          <TableColumn fx:id="colGroupFirstName" text="First Name" prefWidth="120.0"/>
+                          <TableColumn fx:id="colGroupLastName" text="Last Name" prefWidth="120.0"/>
+                      </columns>
+                  </TableView>
+              </children>
+          </AnchorPane>
       </content>
     </Tab>
       <Tab text="Attendance">

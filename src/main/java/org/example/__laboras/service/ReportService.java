@@ -23,7 +23,7 @@ public class ReportService {
 
         for (AttendanceRecord r : records){
             Student s = r.getStudent();
-            String eilute  = s.getName() + " " + s.getSurname()
+            String eilute  = s.getFirstName() + " " + s.getLastName()
                     + " | " + r.getDate()
                     + " | " + r.getStatus();
             document.add(new Paragraph(eilute));

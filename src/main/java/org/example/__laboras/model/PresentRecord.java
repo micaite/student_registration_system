@@ -9,6 +9,6 @@ public class PresentRecord extends AttendanceRecord {
 
      @Override
     public String getStatus(){
-        return "Buvo";
+        return "Present";
      }
 }

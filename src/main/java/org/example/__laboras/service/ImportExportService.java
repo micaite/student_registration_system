@@ -16,7 +16,7 @@ public class ImportExportService {
                 .withHeader("ID", "Vardas", "Pavardė", "Grupė"));
 
         for (Student s: students) {
-            printer.printRecord(s.getId(), s.getName(), s.getSurname());
+            printer.printRecord(s.getId(), s.getFirstName(), s.getLastName());
         }
 
         printer.close();
@@ -56,8 +56,8 @@ public class ImportExportService {
         for (Student s : students) {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(s.getId());
-            row.createCell(1).setCellValue(s.getName());
-            row.createCell(2).setCellValue(s.getSurname());
+            row.createCell(1).setCellValue(s.getFirstName());
+            row.createCell(2).setCellValue(s.getLastName());
             row.createCell(3).setCellValue(s.getGroupName());
         }
 
