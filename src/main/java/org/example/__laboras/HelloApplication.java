@@ -12,8 +12,9 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("demo.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 620, 840);
-        stage.setTitle("Hello!");
+        stage.setTitle("Studentų registravimo sistema");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 }

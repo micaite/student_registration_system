@@ -1,17 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.__laboras.HelloController">
-    <children>
-        <TableView layoutX="121.0" layoutY="50.0" prefHeight="301.0" prefWidth="332.0">
-            <columns>
-                <TableColumn prefWidth="75.0" text="Vardas" />
-                <TableColumn prefWidth="75.0" text="Pavarde" />
-                <TableColumn prefWidth="75.0" text="Amzius" />
-            </columns>
-        </TableView>
-    </children>
-</AnchorPane>
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="org.example.__laboras.HelloController">
+  <tabs>
+    <Tab text="Students">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="searchField" layoutX="14.0" layoutY="25.0" promptText="Search students:" />
+                  <ComboBox fx:id="groupFilter" layoutX="171.0" layoutY="25.0" prefWidth="150.0" promptText="Groups" />
+                  <Button layoutX="337.0" layoutY="25.0" mnemonicParsing="false" text="Add student" onAction="#handleAddStudent"/>
+                  <Button layoutX="433.0" layoutY="25.0" mnemonicParsing="false" text="Import CSV" onAction="#handleImportCSV"/>
+                  <Button layoutX="518.0" layoutY="25.0" mnemonicParsing="false" text="Import Excel" onAction="#handleImportExcel"/>
+                  <TableView layoutX="15.0" layoutY="70.0" prefHeight="261.0" prefWidth="335.0" fx:id="studentsTable">
+                    <columns>
+                      <TableColumn prefWidth="77.33334350585938" text="Student ID" fx:id="colId"/>
+                      <TableColumn prefWidth="103.33331298828125" text="First name" fx:id="colFirstName"/>
+                        <TableColumn prefWidth="92.0" text="Last name" fx:id="colLastName"/>
+                        <TableColumn prefWidth="60.6666259765625" text="Group" fx:id="colGroup"/>
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Groups">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+      <Tab text="Attendance">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+      <Tab text="Report">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+  </tabs>
+</TabPane>
