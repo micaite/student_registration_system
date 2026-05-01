@@ -34,7 +34,7 @@ public class ImportExportService {
             students.add(new Student(
                     record.get("ID"),
                     record.get("Vardas"),
-                    record.get("Pavarde")
+                    record.get("Pavardė")
             ));
         }
 

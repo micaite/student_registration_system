@@ -3,15 +3,15 @@ package org.example.__laboras;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
-import org.apache.poi.hssf.record.pivottable.StreamIDRecord;
 import org.example.__laboras.model.Group;
 import org.example.__laboras.model.Student;
 import org.example.__laboras.service.AttendenceService;
 import org.example.__laboras.service.ImportExportService;
+
+import java.util.List;
 
 public class HelloController {
     @FXML
@@ -25,6 +25,10 @@ public class HelloController {
     @FXML private TableColumn<Student, String> colLastName;
     @FXML private TableColumn<Student, String> colGroup;
 
+    ///
+    @FXML private ComboBox comboGroupName;
+    @FXML private DatePicker dateFrom;
+    @FXML private DatePicker dateTo;
 
     private ObservableList<Student> studentList = FXCollections.observableArrayList(
             new Student("2513666", "Ona", "Onutaite"),
@@ -73,6 +77,17 @@ public class HelloController {
 
     @FXML
     private void handleImportCSV() {
+        ImportExportService importService = new ImportExportService();
+
+        try{
+            List<Student> importedStudents = importExportService.importStudentsFromCSV("students.csv");
+
+            studentList.clear();
+            studentList.addAll(importedStudents);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -80,4 +95,15 @@ public class HelloController {
     private void handleImportExcel() {
 
     }
+
+    @FXML
+    private void handleNewGroup(){
+
+    }
+
+    @FXML
+    private void handleGererate(){
+
+    }
+
 }
