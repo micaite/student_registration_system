@@ -13,7 +13,7 @@ public class ImportExportService {
     public void exportStudentsToCSV(List<Student> students, String filePath) throws Exception {
         FileWriter fw = new FileWriter(filePath);
         CSVPrinter printer = new CSVPrinter(fw, CSVFormat.DEFAULT
-                .withHeader("ID", "Vardas", "Pavardė"));
+                .withHeader("ID", "Vardas", "Pavardė", "Grupė"));
 
         for (Student s: students) {
             printer.printRecord(s.getId(), s.getName(), s.getSurname());
@@ -34,7 +34,8 @@ public class ImportExportService {
             students.add(new Student(
                     record.get("ID"),
                     record.get("Vardas"),
-                    record.get("Pavardė")
+                    record.get("Pavardė"),
+                    record.get("Grupė")
             ));
         }
 
@@ -48,7 +49,8 @@ public class ImportExportService {
         Row header = sheet.createRow(0);
         header.createCell(0).setCellValue("ID");
         header.createCell(1).setCellValue("Vardas");
-        header.createCell(2).setCellValue("Pavarde");
+        header.createCell(2).setCellValue("Pavardė");
+        header.createCell(3).setCellValue("Grupė");
 
         int rowNum = 1;
         for (Student s : students) {
@@ -56,6 +58,7 @@ public class ImportExportService {
             row.createCell(0).setCellValue(s.getId());
             row.createCell(1).setCellValue(s.getName());
             row.createCell(2).setCellValue(s.getSurname());
+            row.createCell(3).setCellValue(s.getGroupName());
         }
 
         FileOutputStream fos = new FileOutputStream(filePath);
@@ -74,7 +77,8 @@ public class ImportExportService {
             students.add(new Student(
                     row.getCell(0).getStringCellValue(),
                     row.getCell(1).getStringCellValue(),
-                    row.getCell(2).getStringCellValue()
+                    row.getCell(2).getStringCellValue(),
+                    row.getCell(3).getStringCellValue()
             ));
         }
 

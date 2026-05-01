@@ -6,17 +6,19 @@ public class Student implements Exportable {
     final private String id;
     final private String name;
     final private String surname;
+    private String groupName;
 
-    public Student (String id, String firstName, String lastName){
+    public Student (String id, String firstName, String lastName, String groupName){
         this.id = id;
         this.name = firstName;
         this.surname = lastName;
+        this.groupName = groupName;
     }
 
     public String getId() { return id; }
     public String getName() { return name; }
     public String getSurname() { return surname; }
-
+    public String getGroupName() {return groupName; }
     // ir setteriai
 
     @Override

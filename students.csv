@@ -1,16 +1,11 @@
-ID,Vardas,Pavardė
-2513666,Ona,Onutaite
-2513667,Paulius,Pauliunas
-2513668,Saule,Saulyte
-2513669,Jonas,Jonaitis
-2513670,Ieva,Ievute
-2513671,Tomas,Tomaitis
-2513672,Greta,Gretute
-2513673,Mantas,Mantaitis
-2513674,Rasa,Rasaite
-2513675,Karolis,Karolaitis
-2513676,Aiste,Aistute
-2513677,Lukas,Lukaitis
-2513678,Simona,Simonaite
-2513679,Darius,Dariunas
-2513680,Egle,Eglute
+ID,Vardas,Pavardė,Grupė
+4001001,Austinas,Petrauskas,Not assigned
+4001002,Beatričė,Kazlauskaitė,Not assigned
+4001003,Cezaris,Jankauskas,Not assigned
+4001004,Dovilė,Vaitkutė,Not assigned
+4001005,Edvinas,Mockus,Not assigned
+4001006,Fausta,Balčiūnaitė,Not assigned
+4001007,Gytis,Žukauskas,Not assigned
+4001008,Hilda,Urbonaitė,Not assigned
+4001009,Ignas,Mažeika,Not assigned
+4001010,Justė,Paulauskaitė,Not assigned

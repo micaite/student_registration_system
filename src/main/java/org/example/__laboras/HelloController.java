@@ -31,9 +31,9 @@ public class HelloController {
     @FXML private DatePicker dateTo;
 
     private ObservableList<Student> studentList = FXCollections.observableArrayList(
-            new Student("2513666", "Ona", "Onutaite"),
-            new Student("2513667","Paulius", "Pauliunas"),
-            new Student("2513668","Saule", "Saulyte")
+            new Student("2513666", "Ona", "Onutaitė", "Not assigned"),
+            new Student("2513667","Paulius", "Pauliunas", "Not assigned"),
+            new Student("2513668","Saule", "Saulytė", "Not assigned")
     );
     private ObservableList<Group> groupList = FXCollections.observableArrayList();
     private AttendenceService attendenceService = new AttendenceService();
@@ -44,7 +44,7 @@ public class HelloController {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colFirstName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colLastName.setCellValueFactory(new PropertyValueFactory<>("surname"));
-        //colGroup.setCellValueFactory(new PropertyValueFactory<>("groupName"));
+        colGroup.setCellValueFactory(new PropertyValueFactory<>("groupName"));
         studentsTable.setItems(studentList);
     }
 
@@ -67,7 +67,7 @@ public class HelloController {
 
         dialog.setResultConverter(button -> {
             if (button == ButtonType.OK) {
-                return new Student(idField.getText(), firstNameField.getText(), lastNameField.getText());
+                return new Student(idField.getText(), firstNameField.getText(), lastNameField.getText(), "Not assigned" );
             }
             return null;
         });
@@ -77,8 +77,6 @@ public class HelloController {
 
     @FXML
     private void handleImportCSV() {
-        ImportExportService importService = new ImportExportService();
-
         try{
             List<Student> importedStudents = importExportService.importStudentsFromCSV("students.csv");
 
@@ -93,7 +91,15 @@ public class HelloController {
 
     @FXML
     private void handleImportExcel() {
+                try{
+            List<Student> importedStudents = importExportService.importStudentsFromExcel("students.xlsx");
 
+            studentList.clear();
+            studentList.addAll(importedStudents);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
