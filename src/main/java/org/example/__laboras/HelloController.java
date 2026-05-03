@@ -17,32 +17,27 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class HelloController {
-    @FXML
-    private TextField searchField;
-    @FXML
-    private ComboBox<String> groupFilter;
-    @FXML
-    private TableView<Student> studentsTable;
+    ///  students
+    @FXML private TableView<Student> studentsTable;
     @FXML private TableColumn<Student, String> colId;
     @FXML private TableColumn<Student, String> colFirstName;
     @FXML private TableColumn<Student, String> colLastName;
     @FXML private TableColumn<Student, String> colGroup;
     @FXML private TableColumn<Student, Void> colActions;
 
-    ///
+    /// groups
     @FXML private ListView<Group> groupsList;
     @FXML private TableView<Student> groupStudentsTable;
     @FXML private TableColumn<Student, String> colGroupStudentId;
     @FXML private TableColumn<Student, String> colGroupFirstName;
     @FXML private TableColumn<Student, String> colGroupLastName;
 
-    ///
-    @FXML
-    private ComboBox<Group> comboGroupName;
+    /// report tab
+    @FXML private ComboBox<Group> comboGroupName;
     @FXML private DatePicker dateFrom;
     @FXML private DatePicker dateTo;
 
-    ///
+    /// attendance
     @FXML private ComboBox<Group> attendanceGroupFilter;
     @FXML private DatePicker attendanceDatePicker;
     @FXML private TableView<Student> attendanceTable;
@@ -55,7 +50,10 @@ public class HelloController {
             new Student("2513667","Paulius", "Pauliunas", "Not assigned"),
             new Student("2513668","Saule", "Saulytė", "Not assigned")
     );
-    private ObservableList<Group> groupList = FXCollections.observableArrayList();
+    private ObservableList<Group> groupList = FXCollections.observableArrayList(
+            new Group ("A"),
+            new Group ("B")
+    );
     private AttendenceService attendenceService = new AttendenceService();
     private ImportExportService importExportService = new ImportExportService();
 
@@ -113,30 +111,61 @@ public class HelloController {
                 LocalDate date = attendanceDatePicker.getValue();
                 if (date == null) { setText(""); return; }
                 boolean present = attendenceService.getByStudent(s).stream()
-                        .anyMatch(r -> r.getDate().equals(date) && r.getStatus().equals("Buvo"));
+                        .anyMatch(r -> r.getDate().equals(date) && r.getStatus().equals("Present"));
                 setText(present ? "Present" : "Absent");
             }
         });
 
         colAttMark.setCellFactory(col -> new TableCell<>() {
-            private final Button btn = new Button("Toggle");
+            private final CheckBox checkBox = new CheckBox();
+
             {
-                btn.setOnAction(e -> {
+                checkBox.setOnAction(e -> {
                     Student s = getTableView().getItems().get(getIndex());
                     LocalDate date = attendanceDatePicker.getValue();
                     if (date == null) return;
-                    attendenceService.toggleAttendance(s, date);
+
+                    attendenceService.getAll().removeIf(r ->
+                            r.getStudent().equals(s) && r.getDate().equals(date)
+                    );
+
+                    attendenceService.markAttendance(s, date, checkBox.isSelected());
+
                     attendanceTable.refresh();
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty ? null : btn);
+                if (empty) {
+                    setGraphic(null);
+                    return;
+                }
+
+                Student s = getTableView().getItems().get(getIndex());
+                LocalDate date = attendanceDatePicker.getValue();
+
+                if (date != null) {
+                    boolean present = attendenceService.getAll().stream()
+                            .anyMatch(r ->
+                                    r.getStudent().equals(s)
+                                            && r.getDate().equals(date)
+                                            && r.getStatus().equals("Present")
+                            );
+                    checkBox.setSelected(present);
+                }
+
+                setGraphic(checkBox);
             }
         });
         ///
         comboGroupName.setItems(groupList);
+
+        //priskiriu stud. grupem
+        groupList.get(0).addStudent(studentList.get(0));
+        groupList.get(1).addStudent(studentList.get(1));
+
     }
 
     @FXML
@@ -190,6 +219,44 @@ public class HelloController {
 
         } catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleExportCSV() {
+        Group selectedGroup = groupsList.getSelectionModel().getSelectedItem();
+
+        if (selectedGroup == null) {
+            showAlert("Error", "Please select a group from the list");
+            return;
+        }
+
+        try {
+            String path = System.getProperty("user.home") + "/Desktop/students.csv";
+            selectedGroup.exportToCSV(path);
+            showAlert("Success", "CSV exported to Desktop");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to export CSV");
+        }
+    }
+
+    @FXML
+    private void handleExportExcel() {
+        Group selectedGroup = groupsList.getSelectionModel().getSelectedItem();
+
+        if (selectedGroup == null) {
+            showAlert("Error", "Please select a group from the list");
+            return;
+        }
+
+        try {
+            String path = System.getProperty("user.home") + "/Desktop/students.xlsx";
+            selectedGroup.exportToExcel(path);
+            showAlert("Success", "Excel exported to Desktop");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to export Excel");
         }
     }
 
@@ -247,23 +314,24 @@ public class HelloController {
         }
 
         ///
-        comboGroupName.setItems(groupList);
+        //comboGroupName.setItems(groupList);
     }
 
     ///
     @FXML
     private void handleGenerate() {
-        Group selectedGroup = (Group) comboGroupName.getValue();
+        Group selectedGroup = comboGroupName.getValue();
         LocalDate from = dateFrom.getValue();
         LocalDate to = dateTo.getValue();
 
-        if (selectedGroup == null || from == null || to == null) return;
+        if (selectedGroup == null || from == null || to == null) {
+            showAlert("Error", "Please select a group and date range");
+            return;
+        }
         try {
-            // 👇 paimam duomenis iš service
             List<AttendanceRecord> groupRecords =
                     attendenceService.getByGroup(selectedGroup);
 
-            // 👇 DUODAM duomenis grupei
             selectedGroup.setAttendanceRecords(groupRecords);
 
             // 👇 NAUDOJAM INTERFACE
@@ -291,7 +359,6 @@ public class HelloController {
         dialog.setContentText("Group name:");
         dialog.showAndWait().ifPresent(name -> {
             groupList.add(new Group(name));
-            groupFilter.getItems().add(name);
         });
     }
 
@@ -300,8 +367,7 @@ public class HelloController {
         Group selected = groupsList.getSelectionModel().getSelectedItem();
         if (selected != null) {
             groupList.remove(selected);
-            groupFilter.getItems().remove(selected.getName());
-        }
+            }
     }
 
     @FXML

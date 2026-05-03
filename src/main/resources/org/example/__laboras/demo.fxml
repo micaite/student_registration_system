@@ -3,32 +3,31 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.ListView?>
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.__laboras.HelloController">
   <tabs>
     <Tab text="Students">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TextField fx:id="searchField" layoutX="14.0" layoutY="25.0" promptText="Search students:" />
-                  <ComboBox fx:id="groupFilter" layoutX="171.0" layoutY="25.0" prefWidth="150.0" promptText="Groups" />
-                  <Button layoutX="337.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleAddStudent" text="Add student" />
-                  <Button layoutX="433.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleImportCSV" text="Import CSV" />
-                  <Button layoutX="518.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleImportExcel" text="Import Excel" />
-                  <TableView fx:id="studentsTable" layoutX="15.0" layoutY="70.0" prefHeight="261.0" prefWidth="335.0">
+                  <Button layoutX="337.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleAddStudent" text="Add a student" />
+                  <Button layoutX="14.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleImportCSV" text="Import CSV" />
+                  <Button layoutX="102.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleImportExcel" text="Import Excel" />
+                  <TableView fx:id="studentsTable" layoutX="14.0" layoutY="65.0" prefHeight="261.0" prefWidth="415.0">
                     <columns>
                       <TableColumn fx:id="colId" prefWidth="77.33334350585938" text="Student ID" />
                       <TableColumn fx:id="colFirstName" prefWidth="103.33331298828125" text="First name" />
                         <TableColumn fx:id="colLastName" prefWidth="92.0" text="Last name" />
                         <TableColumn fx:id="colGroup" prefWidth="60.6666259765625" text="Group" />
-                        <TableColumn text="Actions" fx:id="colActions"/>
+                        <TableColumn fx:id="colActions" text="Edit" />
                     </columns>
                   </TableView>
                </children></AnchorPane>
@@ -38,23 +37,24 @@
       <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                  <Button layoutX="14.0" layoutY="14.0" text="+ New Group" onAction="#handleNewGroup"/>
-                  <Button layoutX="114.0" layoutY="14.0" text="Delete Group" onAction="#handleDeleteGroup"/>
+                  <Button layoutX="14.0" layoutY="14.0" onAction="#handleNewGroup" text="+ New Group" />
+                  <Button layoutX="114.0" layoutY="14.0" onAction="#handleDeleteGroup" text="Delete Group" />
 
-                  <ListView fx:id="groupsList" layoutX="14.0" layoutY="50.0"
-                            prefHeight="300.0" prefWidth="200.0"/>
+                  <ListView fx:id="groupsList" layoutX="14.0" layoutY="50.0" prefHeight="300.0" prefWidth="200.0" />
 
-                  <Button layoutX="224.0" layoutY="50.0" text="Add Student" onAction="#handleAddStudentToGroup"/>
-                  <Button layoutX="224.0" layoutY="80.0" text="Remove Student" onAction="#handleRemoveStudentFromGroup"/>
+                  <Button layoutX="224.0" layoutY="50.0" onAction="#handleAddStudentToGroup" text="Add Student" />
+                  <Button layoutX="224.0" layoutY="80.0" onAction="#handleRemoveStudentFromGroup" text="Remove Student" />
 
-                  <TableView fx:id="groupStudentsTable" layoutX="224.0" layoutY="110.0"
-                             prefHeight="240.0" prefWidth="400.0">
+                  <TableView fx:id="groupStudentsTable" layoutX="224.0" layoutY="110.0" prefHeight="240.0" prefWidth="400.0">
                       <columns>
-                          <TableColumn fx:id="colGroupStudentId" text="ID" prefWidth="80.0"/>
-                          <TableColumn fx:id="colGroupFirstName" text="First Name" prefWidth="120.0"/>
-                          <TableColumn fx:id="colGroupLastName" text="Last Name" prefWidth="120.0"/>
+                          <TableColumn fx:id="colGroupStudentId" prefWidth="80.0" text="ID" />
+                          <TableColumn fx:id="colGroupFirstName" prefWidth="120.0" text="First Name" />
+                          <TableColumn fx:id="colGroupLastName" prefWidth="120.0" text="Last Name" />
                       </columns>
                   </TableView>
+                  <Button layoutX="451.0" layoutY="50.0" onAction="#handleExportCSV" text="Export CSV" />
+                  <Button layoutX="451.0" layoutY="80.0" onAction="#handleExportExcel" text="Export Excel" />
+
               </children>
           </AnchorPane>
       </content>
@@ -63,22 +63,25 @@
         <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="652.0">
                 <children>
-                    <ComboBox fx:id="attendanceGroupFilter" layoutX="14.0" layoutY="14.0"
-                              prefWidth="150.0" promptText="Select Group"/>
-                    <DatePicker fx:id="attendanceDatePicker" layoutX="174.0" layoutY="14.0"
-                                promptText="Select Date"/>
-                    <Button layoutX="354.0" layoutY="14.0" text="Load" onAction="#handleLoadAttendance"/>
+                    <VBox spacing="10">
 
-                    <TableView fx:id="attendanceTable" layoutX="14.0" layoutY="55.0"
-                               prefHeight="300.0" prefWidth="600.0">
-                        <columns>
-                            <TableColumn fx:id="colAttStudent" text="Student" prefWidth="200.0"/>
-                            <TableColumn fx:id="colAttStatus" text="Status" prefWidth="150.0"/>
-                            <TableColumn fx:id="colAttMark" text="Mark" prefWidth="150.0"/>
-                        </columns>
-                    </TableView>
+                        <ComboBox fx:id="attendanceGroupFilter" promptText="Choose a group" />
+                        <DatePicker fx:id="attendanceDatePicker" promptText="Choose a day:" />
 
-                    <Button layoutX="14.0" layoutY="365.0" text="Save Attendance" onAction="#handleSaveAttendance"/>
+                        <HBox spacing="10">
+                            <Button onAction="#handleLoadAttendance" text="Load" />
+                            <Button onAction="#handleSaveAttendance" text="Save" />
+                            </HBox>
+
+                        <TableView fx:id="attendanceTable">
+                            <columns>
+                                <TableColumn fx:id="colAttStudent" text="Student" />
+                                <TableColumn fx:id="colAttStatus" text="Status" />
+                                <TableColumn fx:id="colAttMark" text="✔" />
+                            </columns>
+                        </TableView>
+
+                    </VBox>
                 </children>
             </AnchorPane> </content>
       </Tab>
@@ -89,7 +92,7 @@
                   <Button layoutX="472.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleGenerate" text="Generate" />
                   <DatePicker fx:id="dateTo" layoutX="362.0" layoutY="30.0" promptText="To:" />
                   <DatePicker fx:id="dateFrom" layoutX="178.0" layoutY="30.0" promptText="From:" />
-                  <ComboBox fx:id="comboGroupName" layoutX="14.0" layoutY="30.0" prefWidth="150.0" promptText="Group A" />
+                  <ComboBox fx:id="comboGroupName" layoutX="14.0" layoutY="30.0" prefWidth="150.0" promptText="Select group:" />
                </children></AnchorPane>
         </content>
       </Tab>

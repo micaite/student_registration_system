@@ -45,7 +45,7 @@ public class AttendenceService {
         boolean wasPresent = records.stream()
                 .anyMatch(r -> r.getStudent().equals(student)
                         && r.getDate().equals(date)
-                        && r.getStatus().equals("Buvo"));
+                        && r.getStatus().equals("Present"));
 
         records.removeIf(r -> r.getStudent().equals(student) && r.getDate().equals(date));
 

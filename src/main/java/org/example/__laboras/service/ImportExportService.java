@@ -16,7 +16,7 @@ public class ImportExportService {
                 .withHeader("ID", "Vardas", "Pavardė", "Grupė"));
 
         for (Student s: students) {
-            printer.printRecord(s.getId(), s.getFirstName(), s.getLastName());
+            printer.printRecord(s.getId(), s.getFirstName(), s.getLastName(), s.getGroupName());
         }
 
         printer.close();

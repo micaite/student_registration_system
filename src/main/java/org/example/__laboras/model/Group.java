@@ -2,6 +2,7 @@ package org.example.__laboras.model;
 
 import org.example.__laboras.interfaces.Exportable;
 import org.example.__laboras.interfaces.Reportable;
+import org.example.__laboras.service.ImportExportService;
 import org.example.__laboras.service.ReportService;
 
 import java.time.LocalDate;
@@ -64,14 +65,12 @@ public class Group implements Exportable, Reportable {
 
     @Override
     public void exportToCSV(String filePath) throws Exception {
-        new org.example.__laboras.service.ImportExportService()
-                .exportStudentsToCSV(students, filePath);
+        new ImportExportService().exportStudentsToCSV(students, filePath);
     }
 
     @Override
     public void exportToExcel(String filePath) throws Exception {
-        new org.example.__laboras.service.ImportExportService()
-                .exportStudentsToExcel(students, filePath);
+        new ImportExportService().exportStudentsToExcel(students, filePath);
     }
 
     public void setAttendanceRecords(List<AttendanceRecord> records) {

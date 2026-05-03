@@ -17,16 +17,16 @@ public class ReportService {
         PdfWriter.getInstance(document, new FileOutputStream(filePath));
         document.open();
 
-        document.add(new Paragraph("Grupė: " + group.getName()));
-        document.add(new Paragraph("Laikotarpis: " + dateFrom + " - " + dateTo));
+        document.add(new Paragraph("Group: " + group.getName()));
+        document.add(new Paragraph("Timeline: " + dateFrom + " - " + dateTo));
         document.add(new Paragraph(" "));
 
         for (AttendanceRecord r : records){
             Student s = r.getStudent();
-            String eilute  = s.getFirstName() + " " + s.getLastName()
+            String e  = s.getFirstName() + " " + s.getLastName()
                     + " | " + r.getDate()
                     + " | " + r.getStatus();
-            document.add(new Paragraph(eilute));
+            document.add(new Paragraph(e));
         }
 
         document.close();
