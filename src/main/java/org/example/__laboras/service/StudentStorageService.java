@@ -30,8 +30,4 @@ public class StudentStorageService {
     private String escape(String value) {
         return value == null ? "" : value;
     }
-
-    private String unescape(String value) {
-        return value == null ? "" : value;
-    }
 }

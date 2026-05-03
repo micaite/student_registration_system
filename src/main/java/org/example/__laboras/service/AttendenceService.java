@@ -41,15 +41,5 @@ public class AttendenceService {
         return records;
     }
 
-    public void toggleAttendance(Student student, LocalDate date) {
-        boolean wasPresent = records.stream()
-                .anyMatch(r -> r.getStudent().equals(student)
-                        && r.getDate().equals(date)
-                        && r.getStatus().equals("Present"));
-
-        records.removeIf(r -> r.getStudent().equals(student) && r.getDate().equals(date));
-
-        markAttendance(student, date, !wasPresent);
-    }
 
 }

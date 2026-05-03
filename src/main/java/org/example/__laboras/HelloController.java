@@ -165,7 +165,7 @@ public class HelloController {
         comboGroupName.setItems(groupList);
     }
 
-    // ── Students tab handlers ─────────────────────────────────────────────────
+    // Students tab handlers
 
     @FXML
     private void handleAddStudent() {
@@ -189,7 +189,7 @@ public class HelloController {
 
         dialog.showAndWait().ifPresent(s -> {
             studentList.add(s);
-            storageService.save(studentList); // 2. saugojimas
+            storageService.save(studentList);
         });
     }
 
@@ -277,7 +277,7 @@ public class HelloController {
         attendanceStudentFilter.setItems(studentList);
     }
 
-    // ── Groups tab handlers ───────────────────────────────────────────────────
+    // Groups tab handlers
 
     @FXML private void handleNewGroup() {
         TextInputDialog d = new TextInputDialog();
@@ -346,7 +346,7 @@ public class HelloController {
         } catch (Exception e) { e.printStackTrace(); showAlert("Error", "Failed to export Excel"); }
     }
 
-    // ── Attendance tab handlers ───────────────────────────────────────────────
+    // Attendance tab handlers
 
     @FXML
     private void handleLoadAttendance() {
@@ -388,7 +388,7 @@ public class HelloController {
         filledDaysTable.setItems(FXCollections.observableArrayList(days));
     }
 
-    // ── Report tab handlers ───────────────────────────────────────────────────
+    // Report tab handlers
 
     @FXML
     private void handleGenerate() {
