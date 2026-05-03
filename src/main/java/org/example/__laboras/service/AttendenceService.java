@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class AttendenceService {
     private List<AttendanceRecord> records = new ArrayList<>();
 
-    public void markAttendence (Student student, LocalDate date, boolean present){
+    public void markAttendance (Student student, LocalDate date, boolean present){
         if (present) {
             records.add(new PresentRecord(student, date));
         } else {
@@ -40,4 +40,16 @@ public class AttendenceService {
     public List<AttendanceRecord> getAll() {
         return records;
     }
+
+    public void toggleAttendance(Student student, LocalDate date) {
+        boolean wasPresent = records.stream()
+                .anyMatch(r -> r.getStudent().equals(student)
+                        && r.getDate().equals(date)
+                        && r.getStatus().equals("Buvo"));
+
+        records.removeIf(r -> r.getStudent().equals(student) && r.getDate().equals(date));
+
+        markAttendance(student, date, !wasPresent);
+    }
+
 }

@@ -11,6 +11,7 @@ import org.example.__laboras.model.Student;
 import org.example.__laboras.service.AttendenceService;
 import org.example.__laboras.service.ImportExportService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class HelloController {
@@ -37,6 +38,14 @@ public class HelloController {
     @FXML private ComboBox comboGroupName;
     @FXML private DatePicker dateFrom;
     @FXML private DatePicker dateTo;
+
+    ///
+    @FXML private ComboBox<Group> attendanceGroupFilter;
+    @FXML private DatePicker attendanceDatePicker;
+    @FXML private TableView<Student> attendanceTable;
+    @FXML private TableColumn<Student, String> colAttStudent;
+    @FXML private TableColumn<Student, String> colAttStatus;
+    @FXML private TableColumn<Student, Void> colAttMark;
 
     private ObservableList<Student> studentList = FXCollections.observableArrayList(
             new Student("2513666", "Ona", "Onutaitė", "Not assigned"),
@@ -80,6 +89,47 @@ public class HelloController {
         groupsList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 groupStudentsTable.setItems(FXCollections.observableArrayList(newVal.getStudents()));
+            }
+        });
+
+        ///
+        attendanceGroupFilter.setItems(groupList);
+
+        colAttStudent.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleStringProperty(
+                        c.getValue().getFirstName() + " " + c.getValue().getLastName()
+                )
+        );
+
+        colAttStatus.setCellFactory(col -> new TableCell<Student, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) { setText(null); return; }
+                Student s = getTableView().getItems().get(getIndex());
+                LocalDate date = attendanceDatePicker.getValue();
+                if (date == null) { setText(""); return; }
+                boolean present = attendenceService.getByStudent(s).stream()
+                        .anyMatch(r -> r.getDate().equals(date) && r.getStatus().equals("Buvo"));
+                setText(present ? "Present" : "Absent");
+            }
+        });
+
+        colAttMark.setCellFactory(col -> new TableCell<>() {
+            private final Button btn = new Button("Toggle");
+            {
+                btn.setOnAction(e -> {
+                    Student s = getTableView().getItems().get(getIndex());
+                    LocalDate date = attendanceDatePicker.getValue();
+                    if (date == null) return;
+                    attendenceService.toggleAttendance(s, date);
+                    attendanceTable.refresh();
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : btn);
             }
         });
     }
@@ -257,5 +307,27 @@ public class HelloController {
         selectedStudent.setGroupName("");
         groupStudentsTable.setItems(FXCollections.observableArrayList(selectedGroup.getStudents()));
         studentsTable.refresh();
+    }
+
+    @FXML
+    private void handleLoadAttendance() {
+        Group selected = attendanceGroupFilter.getValue();
+        if (selected == null) return;
+        attendanceTable.setItems(FXCollections.observableArrayList(selected.getStudents()));
+    }
+
+    @FXML
+    private void handleSaveAttendance() {
+        Group selected = attendanceGroupFilter.getValue();
+        LocalDate date = attendanceDatePicker.getValue();
+        if (selected == null || date == null) return;
+
+        for (Student s : selected.getStudents()) {
+            if (attendenceService.getByStudent(s).stream()
+                    .noneMatch(r -> r.getDate().equals(date))) {
+                attendenceService.markAttendance(s, date, false);
+            }
+        }
+        attendanceTable.refresh();
     }
 }

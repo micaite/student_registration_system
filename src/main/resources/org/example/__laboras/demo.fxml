@@ -61,8 +61,26 @@
     </Tab>
       <Tab text="Attendance">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="652.0">
+                <children>
+                    <ComboBox fx:id="attendanceGroupFilter" layoutX="14.0" layoutY="14.0"
+                              prefWidth="150.0" promptText="Select Group"/>
+                    <DatePicker fx:id="attendanceDatePicker" layoutX="174.0" layoutY="14.0"
+                                promptText="Select Date"/>
+                    <Button layoutX="354.0" layoutY="14.0" text="Load" onAction="#handleLoadAttendance"/>
+
+                    <TableView fx:id="attendanceTable" layoutX="14.0" layoutY="55.0"
+                               prefHeight="300.0" prefWidth="600.0">
+                        <columns>
+                            <TableColumn fx:id="colAttStudent" text="Student" prefWidth="200.0"/>
+                            <TableColumn fx:id="colAttStatus" text="Status" prefWidth="150.0"/>
+                            <TableColumn fx:id="colAttMark" text="Mark" prefWidth="150.0"/>
+                        </columns>
+                    </TableView>
+
+                    <Button layoutX="14.0" layoutY="365.0" text="Save Attendance" onAction="#handleSaveAttendance"/>
+                </children>
+            </AnchorPane> </content>
       </Tab>
       <Tab text="Report">
         <content>

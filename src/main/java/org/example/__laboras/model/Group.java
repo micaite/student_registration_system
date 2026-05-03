@@ -2,11 +2,11 @@ package org.example.__laboras.model;
 
 import org.example.__laboras.interfaces.Exportable;
 import org.example.__laboras.interfaces.Reportable;
+import org.example.__laboras.service.ReportService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class Group implements Exportable, Reportable {
     private String name;
@@ -48,17 +48,30 @@ public class Group implements Exportable, Reportable {
 
     @Override
     public void exportToPDF(String filePath) throws Exception {
-        // implementuosim vėliau
+        LocalDate from = attendanceRecords.stream()
+                .map(AttendanceRecord::getDate)
+                .min(LocalDate::compareTo)
+                .orElse(LocalDate.now());
+
+        LocalDate to = attendanceRecords.stream()
+                .map(AttendanceRecord::getDate)
+                .max(LocalDate::compareTo)
+                .orElse(LocalDate.now());
+
+        new org.example.__laboras.service.ReportService()
+                .exportToPDF(this, attendanceRecords, from, to, filePath);
     }
 
     @Override
     public void exportToCSV(String filePath) throws Exception {
-        // implementuosim vėliau
+        new org.example.__laboras.service.ImportExportService()
+                .exportStudentsToCSV(students, filePath);
     }
 
     @Override
     public void exportToExcel(String filePath) throws Exception {
-        // implementuosim vėliau
+        new org.example.__laboras.service.ImportExportService()
+                .exportStudentsToExcel(students, filePath);
     }
 
 }

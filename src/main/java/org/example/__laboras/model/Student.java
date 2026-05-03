@@ -1,6 +1,7 @@
 package org.example.__laboras.model;
 
 import org.example.__laboras.interfaces.Exportable;
+import org.example.__laboras.service.ImportExportService;
 
 public class Student implements Exportable {
     private String id;
@@ -33,11 +34,11 @@ public class Student implements Exportable {
 
     @Override
     public void exportToCSV(String filePath) throws Exception{
-        // implementuosiu veliau
+        new ImportExportService().exportStudentsToCSV(java.util.List.of(this), filePath);
     }
 
     @Override
     public void exportToExcel (String filePath) throws Exception{
-        // veliau
+        new ImportExportService().exportStudentsToExcel(java.util.List.of(this), filePath);
     }
 }
