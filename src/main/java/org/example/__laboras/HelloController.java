@@ -6,10 +6,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import org.example.__laboras.model.AttendanceRecord;
 import org.example.__laboras.model.Group;
 import org.example.__laboras.model.Student;
 import org.example.__laboras.service.AttendenceService;
 import org.example.__laboras.service.ImportExportService;
+import org.example.__laboras.service.ReportService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,7 +37,8 @@ public class HelloController {
     @FXML private TableColumn<Student, String> colGroupLastName;
 
     ///
-    @FXML private ComboBox comboGroupName;
+    @FXML
+    private ComboBox<Group> comboGroupName;
     @FXML private DatePicker dateFrom;
     @FXML private DatePicker dateTo;
 
@@ -132,6 +135,8 @@ public class HelloController {
                 setGraphic(empty ? null : btn);
             }
         });
+        ///
+        comboGroupName.setItems(groupList);
     }
 
     @FXML
@@ -240,12 +245,42 @@ public class HelloController {
         if (selectedGroup != null) {
             groupStudentsTable.setItems(FXCollections.observableArrayList(selectedGroup.getStudents()));
         }
+
+        ///
+        comboGroupName.setItems(groupList);
     }
 
     ///
     @FXML
-    private void handleGererate(){
+    private void handleGenerate() {
+        Group selectedGroup = (Group) comboGroupName.getValue();
+        LocalDate from = dateFrom.getValue();
+        LocalDate to = dateTo.getValue();
 
+        if (selectedGroup == null || from == null || to == null) return;
+        try {
+            // 👇 paimam duomenis iš service
+            List<AttendanceRecord> groupRecords =
+                    attendenceService.getByGroup(selectedGroup);
+
+            // 👇 DUODAM duomenis grupei
+            selectedGroup.setAttendanceRecords(groupRecords);
+
+            // 👇 NAUDOJAM INTERFACE
+            List<AttendanceRecord> report =
+                    selectedGroup.generateReport(from, to);
+
+            new ReportService().exportToPDF(
+                    selectedGroup,
+                    report,
+                    from,
+                    to,
+                    "report.pdf"
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     ///
 
@@ -329,5 +364,15 @@ public class HelloController {
             }
         }
         attendanceTable.refresh();
+    }
+
+
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

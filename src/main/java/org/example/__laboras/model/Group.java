@@ -74,4 +74,8 @@ public class Group implements Exportable, Reportable {
                 .exportStudentsToExcel(students, filePath);
     }
 
+    public void setAttendanceRecords(List<AttendanceRecord> records) {
+        this.attendanceRecords = records;
+    }
+
 }

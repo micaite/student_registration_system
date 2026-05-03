@@ -86,7 +86,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="652.0">
                <children>
-                  <Button layoutX="472.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleGererate" text="Generate" />
+                  <Button layoutX="472.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleGenerate" text="Generate" />
                   <DatePicker fx:id="dateTo" layoutX="362.0" layoutY="30.0" promptText="To:" />
                   <DatePicker fx:id="dateFrom" layoutX="178.0" layoutY="30.0" promptText="From:" />
                   <ComboBox fx:id="comboGroupName" layoutX="14.0" layoutY="30.0" prefWidth="150.0" promptText="Group A" />
