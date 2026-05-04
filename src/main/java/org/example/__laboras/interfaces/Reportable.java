@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface Reportable {
     List<AttendanceRecord> generateReport(LocalDate dateFrom, LocalDate dateTo);
-    void exportToPDF(String filePath) throws Exception;
 
 }

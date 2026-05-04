@@ -36,31 +36,12 @@ public class Group implements Exportable, Reportable {
         return name;
     }
 
-    public void addAttendance(AttendanceRecord record) {
-        attendanceRecords.add(record);
-    }
 
     @Override
     public List<AttendanceRecord> generateReport(LocalDate dateFrom, LocalDate dateTo) {
         return attendanceRecords.stream()
                 .filter(r -> !r.getDate().isBefore(dateFrom) && !r.getDate().isAfter(dateTo))
                 .toList();
-    }
-
-    @Override
-    public void exportToPDF(String filePath) throws Exception {
-        LocalDate from = attendanceRecords.stream()
-                .map(AttendanceRecord::getDate)
-                .min(LocalDate::compareTo)
-                .orElse(LocalDate.now());
-
-        LocalDate to = attendanceRecords.stream()
-                .map(AttendanceRecord::getDate)
-                .max(LocalDate::compareTo)
-                .orElse(LocalDate.now());
-
-        new org.example.__laboras.service.ReportService()
-                .exportToPDF(this, attendanceRecords, from, to, filePath);
     }
 
     @Override

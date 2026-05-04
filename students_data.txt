@@ -1,10 +1,4 @@
-3001001|Emilija|Kazlauskaitė|Not assigned
-3001002|Nojus|Petraitis|A
-3001003|Gabija|Jankauskaitė|A
-3001004|Domantas|Vaitkus|A
-3001005|Ugnė|Mockutė|Not assigned
-3001006|Kajus|Balčiūnas|Not assigned
-3001007|Liepa|Žukauskaitė|Not assigned
-3001008|Matas|Urbonas|Not assigned
-3001009|Austėja|Mažeikaitė|Not assigned
-3001010|Rokas|Paulauskas|Not assigned
+2513666|Ona|Onutaitė|A
+2513667|Paulius|Pauliunas|B
+2513668|Saule|Saulytė|A
+5|s|s|
